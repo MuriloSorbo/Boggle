@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Boggle Party 🦁</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+    <div id="lobby-screen" class="screen active">
+        <div class="logo-area">
+            <h1>PARTY<br>BOGGLE</h1>
+            <div class="emoji-bounce">🎲 VS 🎲</div>
+        </div>
+        <div class="card">
+            <h3>Quem vai jogar?</h3>
+            <div id="player-area">Aguardando...</div>
+        </div>
+        <button id="btn-ready" class="big-btn">ESTOU PRONTO! 🚀</button>
+    </div>
+
+    <div id="game-screen" class="screen">
+        <div class="header">
+            <div id="timer" class="timer">01:30</div>
+            <div class="score-pill">Encontradas: <span id="count-found">0</span></div>
+        </div>
+
+        <div id="word-preview" class="word-preview"></div>
+
+        <div class="board-wrapper">
+            <svg id="drawing-layer"></svg>
+            <div id="board" class="board"></div>
+        </div>
+        
+        <p class="hint-text">Arraste para conectar!</p>
+        <div id="feedback-msg" class="feedback-toast"></div>
+    </div>
+
+    <div id="result-screen" class="screen">
+        <h2>FIM DE JOGO!</h2>
+        <div class="result-container">
+            <div class="bars-area">
+                <div class="bar-group">
+                    <span id="p1-score-txt" class="score-num">0</span>
+                    <div class="bar-track"><div id="p1-bar" class="bar-fill p1"></div></div>
+                    <span style="color:var(--primary); font-weight:bold;">VOCÊ</span>
+                </div>
+                <div class="bar-group">
+                    <span id="p2-score-txt" class="score-num">0</span>
+                    <div class="bar-track"><div id="p2-bar" class="bar-fill p2"></div></div>
+                    <span style="color:var(--secondary); font-weight:bold;">ELA(E)</span>
+                </div>
+            </div>
+
+            <div id="word-stream" class="word-stream"></div>
+
+            <div class="missed-area">
+                <h4>VOCÊS PERDERAM:</h4>
+                <div id="missed-words"></div>
+            </div>
+            
+            <button id="btn-restart" class="big-btn restart-btn">JOGAR DE NOVO 🔄</button>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="client.js"></script>
+</body>
+</html>

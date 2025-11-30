@@ -1,0 +1,99 @@
+:root {
+    --bg: #eef2f3;
+    --primary: #ff6b6b;   /* ROSA (VOCÊ) */
+    --secondary: #4ecdc4; /* TURQUESA (ELA/E) */
+    --dark: #2d3436;
+    --die-size: 17vmin;   /* Diminuí um pouco para caber o gap */
+    --gap: 3.5vmin;       /* AUMENTADO: Mais espaço entre letras */
+}
+
+* { box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; }
+body { margin: 0; font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--dark); overflow: hidden; height: 100vh; width: 100vw; }
+
+h1, h2, h3 { font-family: 'Fredoka One', cursive; margin: 0; text-align: center; }
+
+/* TELAS */
+.screen {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    display: none; flex-direction: column; align-items: center; justify-content: center;
+    padding: 15px; background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+}
+.screen.active { display: flex; z-index: 10; }
+
+/* LOBBY */
+.logo-area h1 { font-size: 12vmin; color: var(--primary); line-height: 0.9; }
+.emoji-bounce { font-size: 10vmin; animation: bounce 1s infinite alternate; }
+@keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+
+.card { background: white; width: 100%; max-width: 400px; padding: 20px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); margin: 20px 0; }
+.player-row { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; font-weight: bold; }
+.player-row.ready { color: var(--secondary); }
+
+.big-btn {
+    background: var(--secondary); color: white; border: none; padding: 15px 30px;
+    font-size: 1.2rem; border-radius: 50px; font-family: 'Fredoka One'; cursor: pointer;
+    box-shadow: 0 5px 0 #2a9d8f; width: 80%; max-width: 300px; transition: transform 0.1s;
+}
+.big-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #2a9d8f; }
+.big-btn:disabled { background: #bdc3c7; box-shadow: none; }
+.restart-btn { background: #ffa502; box-shadow: 0 5px 0 #e67e22; margin-top: 10px; }
+
+/* JOGO */
+.header { display: flex; justify-content: space-between; width: 100%; max-width: 500px; margin-bottom: 10px; font-weight: bold; font-size: 1.2rem; }
+.timer { font-family: 'Fredoka One'; font-size: 2rem; }
+.timer.alert { color: red; animation: pulse 0.5s infinite; }
+@keyframes pulse { 50% { opacity: 0.5; } }
+
+.word-preview { height: 40px; font-family: 'Fredoka One'; font-size: 2rem; color: var(--primary); text-transform: uppercase; margin-bottom: 5px; text-shadow: 2px 2px 0 white; }
+
+.board-wrapper { position: relative; padding: 15px; background: var(--dark); border-radius: 20px; box-shadow: 0 8px 0 #1e272e; }
+
+/* SVG LAYER */
+#drawing-layer {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 10;
+}
+.hint-line { stroke: #ffa502; stroke-width: 8px; stroke-linecap: round; fill: none; opacity: 0.7; animation: dash 1s linear infinite; stroke-dasharray: 10; }
+.user-line { stroke: var(--secondary); stroke-width: 8px; stroke-linecap: round; fill: none; opacity: 0.8; }
+@keyframes dash { to { stroke-dashoffset: -20; } }
+
+.board { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); }
+
+.die {
+    width: var(--die-size); height: var(--die-size);
+    background: white; border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fredoka One'; font-size: calc(var(--die-size) * 0.5);
+    cursor: pointer; box-shadow: 0 5px 0 #bdc3c7; position: relative; z-index: 1;
+}
+
+.die.selected { background: var(--secondary); color: white; transform: scale(0.95); box-shadow: inset 0 0 10px rgba(0,0,0,0.2); }
+.die.hint-highlight { animation: flashYellow 1s infinite; background: #ffeaa7; border: 3px solid #ffa502; }
+@keyframes flashYellow { 50% { background: #fdcb6e; transform: scale(1.05); } }
+
+.feedback-toast {
+    position: absolute; top: 15%; left: 50%; transform: translateX(-50%);
+    font-family: 'Fredoka One'; font-size: 2rem; opacity: 0; pointer-events: none;
+    text-shadow: 2px 2px 0 white; width: 100%; text-align: center; z-index: 20;
+}
+
+/* RESULTADOS */
+.result-container { width: 100%; max-width: 500px; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.bars-area { display: flex; justify-content: space-around; height: 25%; align-items: flex-end; min-height: 150px; }
+.bar-group { display: flex; flex-direction: column; align-items: center; width: 40%; }
+.bar-track { width: 30px; height: 100px; background: #dfe6e9; border-radius: 15px; display: flex; align-items: flex-end; }
+.bar-fill { width: 100%; transition: height 0.3s; }
+.bar-fill.p1 { background: var(--primary); }   /* VOCÊ = ROSA */
+.bar-fill.p2 { background: var(--secondary); } /* ELA = TURQUESA */
+
+.word-stream {
+    flex: 1; border: 2px dashed #ccc; border-radius: 10px; margin: 10px 0;
+    overflow-y: auto; padding: 10px; display: flex; flex-wrap: wrap; align-content: flex-start; gap: 5px;
+}
+
+.res-pill { padding: 4px 10px; border-radius: 12px; color: white; font-weight: bold; font-size: 0.9rem; animation: pop 0.3s; }
+.res-pill.unique { border: 2px solid gold; box-shadow: 0 0 8px gold; z-index: 2; }
+@keyframes pop { from { transform: scale(0); } to { transform: scale(1); } }
+
+.missed-area { height: 15%; background: rgba(255,255,255,0.5); border-radius: 10px; padding: 5px; overflow-y: auto; font-size: 0.8rem; }
+.missed-word { display: inline-block; background: #b2bec3; color: white; padding: 2px 6px; border-radius: 4px; margin: 2px; }
