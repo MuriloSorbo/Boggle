@@ -12,7 +12,7 @@ app.use(express.static('public'));
 
 // === 1. DICIONÁRIO ===
 let DICTIONARY = new Set();
-const DICT_PATH = path.join(__dirname, 'dicionario.txt');
+const DICT_PATH = path.join(__dirname, 'wordlist.txt');
 
 function loadDictionary() {
     try {
